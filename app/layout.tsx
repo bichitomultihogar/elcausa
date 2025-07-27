@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   title: "El Causa - Delivery de Bebidas",
   description: "Delivery de bebidas y productos de kiosco. Pedí desde tu celular y recibilo en tu casa.",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
