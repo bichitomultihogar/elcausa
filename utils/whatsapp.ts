@@ -43,7 +43,7 @@ ${customerData.paymentMethod === "cash" ? "💵 *Cobrar en efectivo al entregar*
 ¡Gracias por tu pedido! 🙏`
 }
 
-export const sendWhatsAppMessage = (message: string, phoneNumber = "543521539991") => {
+export const sendWhatsAppMessage = (message: string, phoneNumber = "3521539991") => {
   const encodedMessage = encodeURIComponent(message)
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`
   window.open(whatsappUrl, "_blank")

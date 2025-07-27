@@ -65,11 +65,11 @@ export function ProductCard({ product, isFavorite, onAddToCart, onToggleFavorite
           </div>
 
           {/* Rating */}
-          <div className="flex items-center space-x-1">
+          {/* <div className="flex items-center space-x-1">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="text-yellow-400 text-sm font-medium">{product.rating}</span>
             <span className="text-gray-500 text-xs">({product.reviews})</span>
-          </div>
+          </div> */}
 
           {/* Price */}
           <div className="flex items-center justify-between">

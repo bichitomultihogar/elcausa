@@ -7,11 +7,11 @@ export function InfoBanner() {
         <div className="flex items-center justify-center space-x-8 text-sm text-white">
           <div className="flex items-center space-x-2">
             <Truck className="h-4 w-4 text-orange-400" />
-            <span className="font-medium">Entrega: 30-45 min</span>
+            <span className="font-medium">Entrega: 15-20 min</span>
           </div>
           <div className="flex items-center space-x-2">
             <MapPin className="h-4 w-4 text-orange-400" />
-            <span className="font-medium">Zona centro</span>
+            <span className="font-medium">San José De La Dormida</span>
           </div>
           <div className="flex items-center space-x-2">
             <Phone className="h-4 w-4 text-orange-400" />

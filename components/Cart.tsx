@@ -86,7 +86,7 @@ export function Cart({
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="text-sm w-8 text-center font-bold text-lg">{item.quantity}</span>
+                    <span className="text-sm w-8 text-center font-bold lg:text-lg">{item.quantity}</span>
                     <Button
                       size="sm"
                       variant="outline"
