@@ -22,7 +22,7 @@ export interface CustomerData {
   phone: string
   address: string
   details: string
-  paymentMethod: "mercadopago" | "transfer" | "cash"
+  paymentMethod: "transfer" | "cash"
 }
 
 export interface Category {

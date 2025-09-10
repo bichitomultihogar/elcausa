@@ -9,12 +9,16 @@ import { ProductGrid } from "./ProductGrid"
 import { Checkout } from "./Checkout"
 import { OrderSuccess } from "./OrderSuccess"
 import { Footer } from "./Footer"
+import { CartNotification } from "./CartNotification"
 import { useCart } from "@/hooks/useCart"
 import { useProducts } from "@/hooks/useProducts"
+import type { Product } from "@/types"
 
 export function DeliveryApp() {
   const [showCheckout, setShowCheckout] = useState(false)
   const [showOrderSuccess, setShowOrderSuccess] = useState(false)
+  const [showCartNotification, setShowCartNotification] = useState(false)
+  const [lastAddedProduct, setLastAddedProduct] = useState<Product | null>(null)
 
   const {
     cart,
@@ -39,9 +43,22 @@ export function DeliveryApp() {
     isLoaded: favoritesLoaded,
   } = useProducts()
 
+  const handleAddToCart = (product: Product) => {
+    addToCart(product)
+    setLastAddedProduct(product)
+    setShowCartNotification(true)
+  }
+
   const handleOrderComplete = () => {
     clearCart()
     setShowOrderSuccess(true)
+  }
+
+  const handleViewCart = () => {
+    setShowCartNotification(false)
+    // Aquí podrías abrir el carrito directamente
+    // Por ahora solo cerramos la notificación
+    // En el futuro se podría implementar para abrir el sheet del carrito
   }
 
   // Show loading while data is being loaded from localStorage
@@ -78,7 +95,7 @@ export function DeliveryApp() {
       <ProductGrid
         products={filteredProducts}
         favorites={favorites}
-        onAddToCart={addToCart}
+        onAddToCart={handleAddToCart}
         onToggleFavorite={toggleFavorite}
       />
 
@@ -93,6 +110,14 @@ export function DeliveryApp() {
       />
 
       <OrderSuccess isOpen={showOrderSuccess} onClose={() => setShowOrderSuccess(false)} />
+
+      <CartNotification
+        isVisible={showCartNotification}
+        product={lastAddedProduct}
+        onClose={() => setShowCartNotification(false)}
+        onViewCart={handleViewCart}
+        totalPrice={getTotalPrice()}
+      />
 
       <Footer />
     </div>
