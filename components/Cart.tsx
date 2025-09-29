@@ -16,6 +16,8 @@ interface CartProps {
   getDeliveryFee: () => number
   getFinalTotal: () => number
   onCheckout: () => void
+  openCart?: boolean
+  onCartOpenChange?: (open: boolean) => void
 }
 
 export function Cart({
@@ -26,9 +28,11 @@ export function Cart({
   getDeliveryFee,
   getFinalTotal,
   onCheckout,
+  openCart,
+  onCartOpenChange,
 }: CartProps) {
   return (
-    <Sheet>
+    <Sheet open={openCart} onOpenChange={onCartOpenChange}>
       <SheetTrigger asChild>
         <Button
           variant="outline"
@@ -109,15 +113,10 @@ export function Cart({
                 </div>
                 <div className="flex justify-between">
                   <span>Envío:</span>
-                  <span className={`font-semibold ${getDeliveryFee() === 0 ? "text-green-400" : ""}`}>
-                    {getDeliveryFee() === 0 ? "GRATIS" : formatPrice(getDeliveryFee())}
+                  <span className="font-semibold text-green-400">
+                    GRATIS
                   </span>
                 </div>
-                {getDeliveryFee() > 0 && (
-                  <p className="text-xs text-orange-400 bg-orange-500/10 p-2 rounded-lg">
-                    💡 Envío gratis en compras mayores a $10.000
-                  </p>
-                )}
               </div>
               <div className="flex justify-between items-center text-base sm:text-lg font-bold border-t border-white/20 pt-3 sm:pt-4">
                 <span>Total:</span>

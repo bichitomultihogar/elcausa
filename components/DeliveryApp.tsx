@@ -19,6 +19,7 @@ export function DeliveryApp() {
   const [showOrderSuccess, setShowOrderSuccess] = useState(false)
   const [showCartNotification, setShowCartNotification] = useState(false)
   const [lastAddedProduct, setLastAddedProduct] = useState<Product | null>(null)
+  const [openCart, setOpenCart] = useState(false)
 
   const {
     cart,
@@ -56,9 +57,7 @@ export function DeliveryApp() {
 
   const handleViewCart = () => {
     setShowCartNotification(false)
-    // Aquí podrías abrir el carrito directamente
-    // Por ahora solo cerramos la notificación
-    // En el futuro se podría implementar para abrir el sheet del carrito
+    setOpenCart(true) // Open the cart
   }
 
   // Show loading while data is being loaded from localStorage
@@ -84,6 +83,8 @@ export function DeliveryApp() {
         getFinalTotal={getFinalTotal}
         onCheckout={() => setShowCheckout(true)}
         favoritesCount={favorites.length}
+        openCart={openCart}
+        onCartOpenChange={setOpenCart}
       />
 
       <InfoBanner />

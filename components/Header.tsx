@@ -16,6 +16,8 @@ interface HeaderProps {
   getFinalTotal: () => number
   onCheckout: () => void
   favoritesCount?: number
+  openCart?: boolean
+  onCartOpenChange?: (open: boolean) => void
 }
 
 export function Header({
@@ -27,6 +29,8 @@ export function Header({
   getFinalTotal,
   onCheckout,
   favoritesCount = 0,
+  openCart,
+  onCartOpenChange,
 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-black/95 border-b border-red-500/30 shadow-2xl">
@@ -78,6 +82,8 @@ export function Header({
               getDeliveryFee={getDeliveryFee}
               getFinalTotal={getFinalTotal}
               onCheckout={onCheckout}
+              openCart={openCart}
+              onCartOpenChange={onCartOpenChange}
             />
           </div>
         </div>

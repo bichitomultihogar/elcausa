@@ -65,7 +65,7 @@ export const useCart = () => {
   }
 
   const getDeliveryFee = () => {
-    return getTotalPrice() >= 10000 ? 0 : 800
+    return 0 // Always free shipping
   }
 
   const getFinalTotal = () => {
