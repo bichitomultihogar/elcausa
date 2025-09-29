@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { products } from "@/data/products"
-
-const FAVORITES_STORAGE_KEY = "el-causa-favorites"
+import { getFavoritesFromStorage, saveFavoritesToStorage, logFavoritesState } from "@/utils/favorites"
 
 export const useProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("todos")
@@ -13,26 +12,17 @@ export const useProducts = () => {
 
   // Cargar favoritos desde localStorage al inicializar
   useEffect(() => {
-    try {
-      const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY)
-      if (savedFavorites) {
-        setFavorites(JSON.parse(savedFavorites))
-      }
-    } catch (error) {
-      console.error("Error loading favorites from localStorage:", error)
-    } finally {
-      setIsLoaded(true)
-    }
+    const savedFavorites = getFavoritesFromStorage()
+    setFavorites(savedFavorites)
+    logFavoritesState(savedFavorites, "loaded from storage")
+    setIsLoaded(true)
   }, [])
 
   // Guardar favoritos en localStorage cuando cambien
   useEffect(() => {
     if (isLoaded) {
-      try {
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
-      } catch (error) {
-        console.error("Error saving favorites to localStorage:", error)
-      }
+      saveFavoritesToStorage(favorites)
+      logFavoritesState(favorites, "saved to storage")
     }
   }, [favorites, isLoaded])
 
@@ -49,7 +39,32 @@ export const useProducts = () => {
   }, [favorites])
 
   const toggleFavorite = (productId: string) => {
-    setFavorites((prev) => (prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]))
+    setFavorites((prev) => {
+      const isCurrentlyFavorite = prev.includes(productId)
+      const newFavorites = isCurrentlyFavorite 
+        ? prev.filter((id) => id !== productId) 
+        : [...prev, productId]
+      
+      logFavoritesState(newFavorites, `toggled product ${productId}`)
+      
+      return newFavorites
+    })
+  }
+
+  const addToFavorites = (productId: string) => {
+    setFavorites((prev) => (prev.includes(productId) ? prev : [...prev, productId]))
+  }
+
+  const removeFromFavorites = (productId: string) => {
+    setFavorites((prev) => prev.filter((id) => id !== productId))
+  }
+
+  const isFavorite = (productId: string) => {
+    return favorites.includes(productId)
+  }
+
+  const clearFavorites = () => {
+    setFavorites([])
   }
 
   return {
@@ -62,6 +77,10 @@ export const useProducts = () => {
     setSearchQuery,
     favorites,
     toggleFavorite,
+    addToFavorites,
+    removeFromFavorites,
+    isFavorite,
+    clearFavorites,
     isLoaded,
   }
 }

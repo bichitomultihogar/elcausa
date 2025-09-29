@@ -18,8 +18,8 @@ interface ProductDetailProps {
 export function ProductDetail({ product }: ProductDetailProps) {
   const [quantity, setQuantity] = useState(1)
   const { addToCart } = useCart()
-  const { favorites, toggleFavorite } = useProducts()
-  const isFavorite = favorites.includes(product.id)
+  const { isFavorite, toggleFavorite } = useProducts()
+  const isProductFavorite = isFavorite(product.id)
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -30,7 +30,16 @@ export function ProductDetail({ product }: ProductDetailProps) {
   }
 
   const handleToggleFavorite = () => {
-    toggleFavorite(product)
+    const wasFavorite = isProductFavorite
+    toggleFavorite(product.id)
+    
+    // Show visual feedback
+    if (wasFavorite) {
+      // You could add a toast notification here if needed
+      console.log(`${product.name} removed from favorites`)
+    } else {
+      console.log(`${product.name} added to favorites`)
+    }
   }
 
   const renderStars = (rating: number) => {
@@ -61,18 +70,18 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </Link>
           
           <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className={`${
-                isFavorite 
-                  ? "text-red-500 hover:text-red-400" 
-                  : "text-gray-400 hover:text-red-500"
-              }`}
-              onClick={handleToggleFavorite}
-            >
-              <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
-            </Button>
+             <Button
+               variant="ghost"
+               size="sm"
+               className={`${
+                 isProductFavorite 
+                   ? "text-red-500 hover:text-red-400" 
+                   : "text-gray-400 hover:text-red-500"
+               } transition-all duration-200`}
+               onClick={handleToggleFavorite}
+             >
+               <Heart className={`h-5 w-5 ${isProductFavorite ? "fill-current animate-pulse" : ""} transition-all duration-200`} />
+             </Button>
           </div>
         </div>
       </header>

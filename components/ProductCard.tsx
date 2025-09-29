@@ -65,7 +65,7 @@ export function ProductCard({ product, isFavorite, onAddToCart, onToggleFavorite
               className="absolute top-1 right-1 sm:top-2 sm:right-2 h-6 w-6 sm:h-8 sm:w-8 p-0 bg-black/60 backdrop-blur-sm hover:bg-black/80 rounded-full z-10"
               onClick={handleToggleFavorite}
             >
-              <Heart className={`h-3 w-3 sm:h-4 sm:w-4 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`} />
+              <Heart className={`h-3 w-3 sm:h-4 sm:w-4 ${isFavorite ? "fill-red-500 text-red-500 animate-pulse" : "text-white"} transition-all duration-200`} />
             </Button>
 
             {/* Availability Overlay */}
